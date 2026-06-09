@@ -9,6 +9,7 @@ import {
   Trash2,
   XCircle,
 } from "lucide-react";
+import CreateJobApplicationDialog from "./create-job-dialog";
 
 type KanbanBoardProps = {
   board: Board;
@@ -64,7 +65,7 @@ function DroppableColumn({
       </div>
       {/* Card Content */}
       <div className="space-y-2 pt-4 bg-gray-50/50 min-h-100 rounded-b-lg">
-      <CreateJobApplicationDialog />
+      <CreateJobApplicationDialog boardId={boardId} columnId={column._id } />
       </div>
     </div>
   );
