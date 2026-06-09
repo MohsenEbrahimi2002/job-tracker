@@ -1,7 +1,14 @@
 "use client";
 
 import { Board, Column } from "@/lib/models/models.type";
-import { Award, Calendar, CheckCircle2, Mic, XCircle } from "lucide-react";
+import {
+  Award,
+  Calendar,
+  CheckCircle2,
+  Mic,
+  Trash2,
+  XCircle,
+} from "lucide-react";
 
 type KanbanBoardProps = {
   board: Board;
@@ -44,14 +51,20 @@ function DroppableColumn({
   boardId: string;
 }) {
   return (
-    <div className="w-full my-4">
-      <div className={`${config.color} p-2`}>
-        <div>
-          <div>
+    <div className="w-full min-w-75 p-0 shadow-md shrink-0 my-4">
+      <div className={`${config.color} p-4 rounded-t-lg pb-3`}>
+        <div className="flex justify-between items-center text-white">
+          <div className="flex items-center gap-2">
             {config.icon}
-            <span>{column.name}</span>
+            <span className="font-semibold text-nowrap">{column.name}</span>
           </div>
+
+          <Trash2 className="h-5 w-5" />
         </div>
+      </div>
+      {/* Card Content */}
+      <div className="space-y-2 pt-4 bg-gray-50/50 min-h-100 rounded-b-lg">
+      <CreateJobApplicationDialog />
       </div>
     </div>
   );
