@@ -44,8 +44,8 @@ function DroppableColumn({
   boardId: string;
 }) {
   return (
-    <div className="w-full">
-      <div className={`${config.color}`}>
+    <div className="w-full my-4">
+      <div className={`${config.color} p-2`}>
         <div>
           <div>
             {config.icon}
