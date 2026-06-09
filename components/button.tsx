@@ -18,8 +18,7 @@ function Button({
   ...props
 }: ButtonProp & ComponentProps<"button">) {
   const baseStyle =
-    " group flex items-center whitespace-nowrap gap-2 transition-all rounded-md cursor-pointer sm:px-6 px-4 h-12";
-
+    "group flex justify-center items-center whitespace-nowrap gap-2 transition-all rounded-md cursor-pointer sm:px-4 px-2 h-12";
   return (
     <button
       // style={style}

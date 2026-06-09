@@ -31,7 +31,7 @@ function Navbar() {
 
   return (
     <nav className="border-b sm:mx-10 border-gray-200 bg-white">
-      <div className="container mx-auto  justify-between flex h-16 items-center px-4">
+      <div className="container mx-auto gap-4 justify-between flex h-16 items-center px-4">
         <Link
           href="/"
           className="flex items-center  whitespace-nowrap gap-2 font-semibold text-xl text-primary"
@@ -43,17 +43,17 @@ function Navbar() {
           <>
             <div
               ref={dropdownRef}
-              className="relative flex items-center justify-center gap-4"
+              className="relative flex items-center justify-center gap-3"
             >
               <Link href="/dashboard">
-                <Button variant="ghost" className="h-12 border border-primary">
+                <Button variant="ghost" className="h-10 w-26 border border-primary">
                   dashboard
                 </Button>
               </Link>
               <div>
                 <Button
                   onClick={() => setOpenDropDownMenu((prev) => !prev)}
-                  className="rounded-full w-12 flex justify-center"
+                  className="rounded-full w-10 h-10 flex justify-center"
                 >
                   {data.user.name[0].toUpperCase()}
                 </Button>
@@ -67,12 +67,12 @@ function Navbar() {
           <>
             <div className="flex items-center gap-0.5 sm:gap-2">
               <Link href="/login">
-                <Button variant="ghost" className="h-10">
+                <Button variant="ghost" className="h-10 w-18">
                   Log In
                 </Button>
               </Link>
               <Link href="/signup">
-                <Button className="h-10">Sign Up</Button>
+                <Button className="h-10 w-18">Sign Up</Button>
               </Link>
             </div>
           </>
