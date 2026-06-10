@@ -2,6 +2,7 @@ import { useState } from "react";
 import Button from "./button";
 import { Plus } from "lucide-react";
 import Input from "./input";
+import { createJobApplication } from "@/lib/actions/job-applications";
 
 type DialogProps = {
   columnId: string;
@@ -22,15 +23,29 @@ function CreateJobApplicationDialog({ columnId, boardId }: DialogProps) {
   const [openDialog, setOpenDialog] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
 
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      
+      const result = await createJobApplication({
+        ...formData,
+        columnId,
+        boardId,
+        tags: formData.tags
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter((tag) => tag.length > 0),
+      });
+
+      if (!result.error) {
+        setFormData(INITIAL_FORM_DATA);
+        setOpenDialog(false);
+      } else {
+        console.error("Failed to create job: ", result.error);
+      }
     } catch (err) {
-      console.error("handleSubmit err: ", err)
+      console.error("handleSubmit err: ", err);
     }
-  }
+  };
   return (
     <>
       <Button variant="ghost" onClick={() => setOpenDialog(true)}>

@@ -38,7 +38,7 @@ export const createJobApplication = async (data: JobApplicationData) => {
   } = data;
 
   if (!boardId || !columnId || !company || !position) {
-    return { err: "Missing fields required" };
+    return { error: "Missing fields required" };
   }
 
   // Verify board ownership
@@ -47,7 +47,7 @@ export const createJobApplication = async (data: JobApplicationData) => {
     userId: session.user.id,
   });
   if (!board) {
-    return { Error: "Board not found" };
+    return { error: "Board not found" };
   }
 
   // Verify columns belong to board
