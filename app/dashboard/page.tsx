@@ -15,7 +15,10 @@ async function Dashboard() {
     userId: session.user.id,
     name: "Job Hunt",
   }).populate({
-    path: "columns"
+    path: "columns",
+    populate: {
+      path: "jobApplications",
+    },
   });
   console.log(result);
 
@@ -26,7 +29,10 @@ async function Dashboard() {
           <h1 className="text-3xl font-bold text-black">{result.name}</h1>
           <p className="text-gray-600">Track your job applications</p>
         </div>
-        <KanbanBoard board={JSON.parse(JSON.stringify(result))} userId={session.user.id} />
+        <KanbanBoard
+          board={JSON.parse(JSON.stringify(result))}
+          userId={session.user.id}
+        />
       </div>
     </div>
   );
