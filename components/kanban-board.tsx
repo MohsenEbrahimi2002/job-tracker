@@ -10,6 +10,7 @@ import {
   XCircle,
 } from "lucide-react";
 import CreateJobApplicationDialog from "./create-job-dialog";
+import JobApplicationCard from "./job-application-card";
 
 type KanbanBoardProps = {
   board: Board;
@@ -54,7 +55,16 @@ function DroppableColumn({
   sortedColumns: Column[];
 }) {
   const sortedJobs =
-    column.jobApplications?.sort((a, b) => a.order - b.order) || [];
+    column.jobApplications
+      .sort((a, b) => a.order - b.order) || [];
+
+  console.log(
+    column.name,
+    column.jobApplications.map((j) => ({
+      id: j._id,
+      position: j.position,
+    })),
+  );
   return (
     <div className="w-full min-w-75 p-0 shadow-md shrink-0 my-4">
       <div className={`${config.color} p-4 rounded-t-lg pb-3`}>
@@ -82,10 +92,18 @@ function DroppableColumn({
   );
 }
 
-function SortableJobCard({ job, columns }: { job: JobApplication; columns: Column[] }) {
-  return <div>
-    <JobApplicationCard />
-  </div>;
+function SortableJobCard({
+  job,
+  columns,
+}: {
+  job: JobApplication;
+  columns: Column[];
+}) {
+  return (
+    <div>
+      <JobApplicationCard job={job} columns={columns} />
+    </div>
+  );
 }
 function KanbanBoard({ board, userId }: KanbanBoardProps) {
   const columns = board.columns;
