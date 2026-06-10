@@ -1,6 +1,6 @@
 "use client";
 
-import { Board, Column } from "@/lib/models/models.type";
+import { Board, Column, JobApplication } from "@/lib/models/models.type";
 import {
   Award,
   Calendar,
@@ -46,11 +46,15 @@ function DroppableColumn({
   column,
   config,
   boardId,
+  sortedColumns,
 }: {
   column: Column;
   config: ColConfig;
   boardId: string;
+  sortedColumns: Column[];
 }) {
+  const sortedJobs =
+    column.jobApplications?.sort((a, b) => a.order - b.order) || [];
   return (
     <div className="w-full min-w-75 p-0 shadow-md shrink-0 my-4">
       <div className={`${config.color} p-4 rounded-t-lg pb-3`}>
@@ -65,13 +69,27 @@ function DroppableColumn({
       </div>
       {/* Card Content */}
       <div className="space-y-2 pt-4 bg-gray-50/50 min-h-100 rounded-b-lg">
-      <CreateJobApplicationDialog boardId={boardId} columnId={column._id } />
+        {sortedJobs.map((job, key) => (
+          <SortableJobCard
+            key={key}
+            job={{ ...job, columnId: job.columnId || column._id }}
+            columns={sortedColumns}
+          />
+        ))}
+        <CreateJobApplicationDialog boardId={boardId} columnId={column._id} />
       </div>
     </div>
   );
 }
+
+function SortableJobCard({ job, columns }: { job: JobApplication; columns: Column[] }) {
+  return <div>
+    <JobApplicationCard />
+  </div>;
+}
 function KanbanBoard({ board, userId }: KanbanBoardProps) {
   const columns = board.columns;
+  const sortedColumns = columns?.sort((a, b) => a.order - b.order) || [];
   return (
     <>
       <div>
@@ -87,6 +105,7 @@ function KanbanBoard({ board, userId }: KanbanBoardProps) {
                 column={col}
                 config={config}
                 boardId={board._id}
+                sortedColumns={sortedColumns}
               />
             );
           })}
