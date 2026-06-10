@@ -21,6 +21,16 @@ const INITIAL_FORM_DATA = {
 function CreateJobApplicationDialog({ columnId, boardId }: DialogProps) {
   const [openDialog, setOpenDialog] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      
+    } catch (err) {
+      console.error("handleSubmit err: ", err)
+    }
+  }
   return (
     <>
       <Button variant="ghost" onClick={() => setOpenDialog(true)}>
@@ -37,7 +47,7 @@ function CreateJobApplicationDialog({ columnId, boardId }: DialogProps) {
             className="bg-white rounded-lg p-4 overflow-y-auto max-h-[90vh] w-full max-w-md"
           >
             <h2 className="text-lg font-bold">Add Job Application</h2>
-            <form action="">
+            <form action="" onSubmit={handleSubmit}>
               <div className="grid grid-cols-2 gap-x-4 w-full">
                 <Input
                   id="comp"
