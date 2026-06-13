@@ -2,14 +2,17 @@
 import { Briefcase } from "lucide-react";
 import Link from "next/link";
 import Button from "./button";
-import { useSession } from "@/lib/auth/auth-client";
-import { useEffect, useRef, useState } from "react";
+import { signOut, useSession } from "@/lib/auth/auth-client";
+import { useState } from "react";
 import DropDownMenu from "./dropdown";
 import { useClickOutside } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 function Navbar() {
   const [openDropDownMenu, setOpenDropDownMenu] = useState(false);
   const { data } = useSession();
+
+  const router = useRouter();
 
   const dropdownRef = useClickOutside(() => setOpenDropDownMenu(false));
 
@@ -46,7 +49,23 @@ function Navbar() {
                 </Button>
               </div>
               {openDropDownMenu && (
-                <DropDownMenu name={data.user.name} email={data.user.email} />
+                <DropDownMenu className="h-36">
+                  <p className="text-black font-bold text-xl">
+                    {data.user.name}
+                  </p>
+                  <p className="text-slate-500/80 -mt-8">{data.user.email}</p>
+                  <Button
+                    onClick={async () => {
+                      const result = await signOut();
+                      result.data?.success
+                        ? router.push("/login")
+                        : alert("Error in Logout");
+                    }}
+                    className="flex justify-center h-9 hover:bg-slate-500/80"
+                  >
+                    Logout
+                  </Button>
+                </DropDownMenu>
               )}
             </div>
           </>
