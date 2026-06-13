@@ -5,29 +5,13 @@ import Button from "./button";
 import { useSession } from "@/lib/auth/auth-client";
 import { useEffect, useRef, useState } from "react";
 import DropDownMenu from "./dropdown";
+import { useClickOutside } from "@/lib/utils";
 
 function Navbar() {
   const [openDropDownMenu, setOpenDropDownMenu] = useState(false);
   const { data } = useSession();
 
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setOpenDropDownMenu(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  const dropdownRef = useClickOutside(() => setOpenDropDownMenu(false));
 
   return (
     <nav className="border-b sm:mx-10 border-gray-200 bg-white">
@@ -46,7 +30,10 @@ function Navbar() {
               className="relative flex items-center justify-center gap-3"
             >
               <Link href="/dashboard">
-                <Button variant="ghost" className="h-10 w-26 border border-primary">
+                <Button
+                  variant="ghost"
+                  className="h-10 w-26 border border-primary"
+                >
                   dashboard
                 </Button>
               </Link>
