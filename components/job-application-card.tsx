@@ -4,6 +4,7 @@ import { Edit2, ExternalLink, MoreVertical, Trash2 } from "lucide-react";
 import DropDownMenu from "./dropdown";
 import { useState } from "react";
 import { useClickOutside } from "@/lib/utils";
+import { updateJobApplication } from "@/lib/actions/job-applications";
 
 type JobApplicationCardProps = {
   job: JobApplication;
@@ -14,6 +15,16 @@ function JobApplicationCard({ job, columns }: JobApplicationCardProps) {
   const [openDropDownMenu, setOpenDropDownMenu] = useState(false);
 
   const dropdown = useClickOutside(() => setOpenDropDownMenu(false));
+
+  const handleMove = async (newColumnId: string) => {
+    try {
+      const result = await updateJobApplication(job._id, {
+        columnId: newColumnId,
+      });
+    } catch (error) {
+      console.error("Failed to move job application", error);
+    }
+  };
   return (
     <>
       <div className="relative cursor-pointer mx-auto my-4 rounded w-[94%] transition-shadow hover:shadow-lg bg-white group shadow-sm">
@@ -71,6 +82,7 @@ function JobApplicationCard({ job, columns }: JobApplicationCardProps) {
                         .map((col) => (
                           <button
                             key={col._id}
+                            onClick={() => handleMove(col._id)}
                             className="text-left rounded px-2 hover:bg-slate-100/60"
                           >
                             Move to {col.name}
