@@ -78,7 +78,7 @@ function DroppableColumn({
         </div>
       </div>
       {/* Card Content */}
-      <div className="space-y-2 pt-4 bg-gray-50/50 min-h-100 rounded-b-lg">
+      <div className="space-y-2 py-4 bg-gray-50/50 min-h-100 rounded-b-lg">
         {sortedJobs.map((job, key) => (
           <SortableJobCard
             key={key}

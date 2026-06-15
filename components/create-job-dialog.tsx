@@ -48,7 +48,7 @@ function CreateJobApplicationDialog({ columnId, boardId }: DialogProps) {
   };
   return (
     <>
-      <Button variant="ghost" onClick={() => setOpenDialog(true)}>
+      <Button className="w-30 ml-10 shadow-md" variant="ghost" onClick={() => setOpenDialog(true)}>
         <Plus className="h-5 w-5" />
         Add Job
       </Button>
