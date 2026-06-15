@@ -20,7 +20,6 @@ async function Dashboard() {
       path: "jobApplications",
     },
   });
-  console.log(result);
 
   return (
     <div className="min-h-screen bg-white">
