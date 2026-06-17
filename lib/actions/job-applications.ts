@@ -84,7 +84,7 @@ export const createJobApplication = async (data: JobApplicationData) => {
     $push: { jobApplications: jobApplication._id },
   });
 
-  //   revalidatePath("/dashboard");
+    revalidatePath("/dashboard");
 
   return { data: JSON.parse(JSON.stringify(jobApplication)) };
 };
@@ -223,7 +223,7 @@ export async function updateJobApplication(
     new: true,
   });
 
-  // revalidatePath("/dashboard");
+  revalidatePath("/dashboard");
 
   return { data: JSON.parse(JSON.stringify(updated)) };
 }
@@ -246,7 +246,7 @@ export async function deleteJobApplication(id: string) {
   });
 
   await JobApplication.deleteOne({ _id: id });
-  // revalidatePath("/dashboard");
+  revalidatePath("/dashboard");
 
   return { success: true };
 }

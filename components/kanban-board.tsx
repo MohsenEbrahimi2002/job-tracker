@@ -98,7 +98,7 @@ function DroppableColumn({
       {/* Card Content */}
       <div
         ref={setNodeRef}
-        className={`space-y-2 py-4 bg-gray-50/50 h-full overflow-y-hidden rounded-b-lg ${isOver ? "ring-2 ring-blue-500" : ""}`}
+        className={`space-y-2 py-4 bg-gray-50/50 h-full min-w-[20rem] overflow-y-hidden rounded-b-lg ${isOver ? "ring-2 ring-blue-500" : ""}`}
       >
         <SortableContext
           items={sortedJobs.map((job) => job._id)}

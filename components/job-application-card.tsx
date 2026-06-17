@@ -80,7 +80,7 @@ function JobApplicationCard({
     <>
       <div
         {...dragHandleProps}
-        className="relative cursor-pointer mx-auto my-4 rounded w-[94%] transition-shadow hover:shadow-lg bg-white group shadow-sm"
+        className="relative pb-16 cursor-pointer mx-auto my-4 rounded w-[94%] transition-shadow hover:shadow-lg bg-white group shadow-sm"
       >
         <div className="p-3">
           <div className=" flex items-start justify-between gap-2">
