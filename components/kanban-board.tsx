@@ -19,6 +19,12 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
+import {
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 type KanbanBoardProps = {
   board: Board;
@@ -96,13 +102,19 @@ function DroppableColumn({
         ref={setNodeRef}
         className={`space-y-2 py-4 bg-gray-50/50 min-h-100 rounded-b-lg ${isOver ? "ring-2 ring-blue-500" : ""}`}
       >
-        {sortedJobs.map((job, key) => (
-          <SortableJobCard
-            key={key}
-            job={{ ...job, columnId: job.columnId || column._id }}
-            columns={sortedColumns}
-          />
-        ))}
+        <SortableContext
+          items={sortedJobs.map((job) => job._id)}
+          strategy={verticalListSortingStrategy}
+        >
+          {sortedJobs.map((job, key) => (
+            <SortableJobCard
+              key={key}
+              job={{ ...job, columnId: job.columnId || column._id }}
+              columns={sortedColumns}
+            />
+          ))}
+        </SortableContext>
+
         <CreateJobApplicationDialog boardId={boardId} columnId={column._id} />
       </div>
     </div>
@@ -116,8 +128,28 @@ function SortableJobCard({
   job: JobApplication;
   columns: Column[];
 }) {
+  const {
+    attributes,
+    listeners,
+    transform,
+    transition,
+    isDragging,
+    setNodeRef,
+  } = useSortable({
+    id: job._id,
+    data: {
+      type: "job",
+      job,
+    },
+  });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging? 0.5 : 1
+  }
   return (
-    <div>
+    <div ref={setNodeRef}>
       <JobApplicationCard job={job} columns={columns} />
     </div>
   );
