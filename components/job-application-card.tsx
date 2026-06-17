@@ -4,7 +4,10 @@ import { Edit2, ExternalLink, MoreVertical, Trash2 } from "lucide-react";
 import DropDownMenu from "./dropdown";
 import { FormEvent, useState } from "react";
 import { useClickOutside } from "@/lib/utils";
-import { updateJobApplication } from "@/lib/actions/job-applications";
+import {
+  deleteJobApplication,
+  updateJobApplication,
+} from "@/lib/actions/job-applications";
 import Input from "./input";
 import Button from "./button";
 
@@ -42,6 +45,17 @@ function JobApplicationCard({ job, columns }: JobApplicationCardProps) {
       });
       if (!result.error) {
         setOpenEditDialog(false);
+      }
+    } catch (error) {
+      console.error("Failed to move job application", error);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const result = await deleteJobApplication(job._id);
+      if (result.error) {
+        console.error("Failed to delete job application", result.error);
       }
     } catch (error) {
       console.error("Failed to move job application", error);
@@ -125,7 +139,7 @@ function JobApplicationCard({ job, columns }: JobApplicationCardProps) {
                         ))}
                     </>
                   )}
-                  <span className="flex items-center rounded px-2 hover:bg-slate-100/60">
+                  <span onClick={()=> handleDelete()} className="flex items-center rounded px-2 hover:bg-slate-100/60">
                     <Trash2 size={16} className="mr-2 h-4 w-4" /> Delete
                   </span>
                 </DropDownMenu>
