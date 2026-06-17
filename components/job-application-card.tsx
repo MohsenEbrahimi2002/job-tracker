@@ -119,7 +119,10 @@ function JobApplicationCard({ job, columns }: JobApplicationCardProps) {
               {openDropDownMenu && (
                 <DropDownMenu>
                   <span
-                    onClick={() => setOpenEditDialog(!openEditDialog)}
+                    onClick={() => {
+                      setOpenDropDownMenu(false);
+                      setOpenEditDialog(!openEditDialog);
+                    }}
                     className="flex items-center  rounded px-2 hover:bg-slate-100/60"
                   >
                     <Edit2 size={16} className="mr-2 h-4 w-4" /> Edit
@@ -131,7 +134,10 @@ function JobApplicationCard({ job, columns }: JobApplicationCardProps) {
                         .map((col) => (
                           <button
                             key={col._id}
-                            onClick={() => handleMove(col._id)}
+                            onClick={() => {
+                              setOpenDropDownMenu(false);
+                              handleMove(col._id);
+                            }}
                             className="text-left rounded px-2 hover:bg-slate-100/60"
                           >
                             Move to {col.name}
@@ -139,7 +145,13 @@ function JobApplicationCard({ job, columns }: JobApplicationCardProps) {
                         ))}
                     </>
                   )}
-                  <span onClick={()=> handleDelete()} className="flex items-center rounded px-2 hover:bg-slate-100/60">
+                  <span
+                    onClick={() => {
+                      setOpenDropDownMenu(false);
+                      handleDelete();
+                    }}
+                    className="flex items-center rounded px-2 hover:bg-slate-100/60"
+                  >
                     <Trash2 size={16} className="mr-2 h-4 w-4" /> Delete
                   </span>
                 </DropDownMenu>

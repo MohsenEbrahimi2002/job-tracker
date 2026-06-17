@@ -11,6 +11,13 @@ import {
 } from "lucide-react";
 import CreateJobApplicationDialog from "./create-job-dialog";
 import JobApplicationCard from "./job-application-card";
+import {
+  closestCorners,
+  DndContext,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 
 type KanbanBoardProps = {
   board: Board;
@@ -55,8 +62,7 @@ function DroppableColumn({
   sortedColumns: Column[];
 }) {
   const sortedJobs =
-    column.jobApplications
-      .sort((a, b) => a.order - b.order) || [];
+    column.jobApplications.sort((a, b) => a.order - b.order) || [];
 
   console.log(
     column.name,
@@ -108,8 +114,26 @@ function SortableJobCard({
 function KanbanBoard({ board, userId }: KanbanBoardProps) {
   const columns = board.columns;
   const sortedColumns = columns?.sort((a, b) => a.order - b.order) || [];
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+  );
+
+  async function handleDragStart() {}
+
+  async function handleDragEnd() {}
+
   return (
-    <>
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCorners}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+    >
       <div>
         <div>
           {columns.map((col, key) => {
@@ -129,7 +153,7 @@ function KanbanBoard({ board, userId }: KanbanBoardProps) {
           })}
         </div>
       </div>
-    </>
+    </DndContext>
   );
 }
 
