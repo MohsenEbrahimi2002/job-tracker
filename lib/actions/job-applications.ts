@@ -250,3 +250,47 @@ export async function deleteJobApplication(id: string) {
 
   return { success: true };
 }
+
+
+export async function deleteColumn(columnId: string) {
+  const session = await getSession();
+
+  if (!session?.user) {
+    return { error: "Unauthorized" };
+  }
+
+  await connectDB();
+
+  const column = await Column.findById(columnId);
+
+  if (!column) {
+    return { error: "Column not found" };
+  }
+
+  const board = await Board.findOne({
+    _id: column.boardId,
+    userId: session.user.id,
+  });
+
+  if (!board) {
+    return { error: "Unauthorized" };
+  }
+
+  await JobApplication.deleteMany({
+    columnId,
+  });
+
+  await Board.findByIdAndUpdate(column.boardId, {
+    $pull: {
+      columns: columnId,
+    },
+  });
+
+  await Column.findByIdAndDelete(columnId);
+
+  revalidatePath("/dashboard");
+
+  return {
+    success: true,
+  };
+}

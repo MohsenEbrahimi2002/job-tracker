@@ -30,6 +30,7 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
 import { useBoard } from "@/lib/hooks/useBoards";
+import { deleteColumn } from "@/lib/actions/job-applications";
 
 type KanbanBoardProps = {
   board: Board;
@@ -73,6 +74,14 @@ function DroppableColumn({
   boardId: string;
   sortedColumns: Column[];
 }) {
+  const handleDeleteColumn = async () => {
+    const result = await deleteColumn(column._id);
+
+    if (result?.error) {
+      alert(result.error);
+    }
+  };
+
   const { setNodeRef, isOver } = useDroppable({
     id: column._id,
     data: {
@@ -92,7 +101,10 @@ function DroppableColumn({
             <span className="font-semibold text-nowrap">{column.name}</span>
           </div>
 
-          <Trash2 className="h-5 w-5" />
+          <Trash2
+            onClick={handleDeleteColumn}
+            className="h-5 w-5 cursor-pointer"
+          />
         </div>
       </div>
       {/* Card Content */}
