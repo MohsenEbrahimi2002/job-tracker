@@ -2,7 +2,7 @@
 import { Column, JobApplication } from "@/lib/models/models.type";
 import { Edit2, ExternalLink, MoreVertical, Trash2 } from "lucide-react";
 import DropDownMenu from "./dropdown";
-import { FormEvent, useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { useClickOutside } from "@/lib/utils";
 import {
   deleteJobApplication,
@@ -14,9 +14,14 @@ import Button from "./button";
 type JobApplicationCardProps = {
   job: JobApplication;
   columns: Column[];
+  dragHandleProps?: React.HTMLAttributes<HTMLElement>;
 };
 
-function JobApplicationCard({ job, columns }: JobApplicationCardProps) {
+function JobApplicationCard({
+  job,
+  columns,
+  dragHandleProps,
+}: JobApplicationCardProps) {
   const [openDropDownMenu, setOpenDropDownMenu] = useState(false);
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [formData, setFormData] = useState({
@@ -73,7 +78,10 @@ function JobApplicationCard({ job, columns }: JobApplicationCardProps) {
   };
   return (
     <>
-      <div className="relative cursor-pointer mx-auto my-4 rounded w-[94%] transition-shadow hover:shadow-lg bg-white group shadow-sm">
+      <div
+        {...dragHandleProps}
+        className="relative cursor-pointer mx-auto my-4 rounded w-[94%] transition-shadow hover:shadow-lg bg-white group shadow-sm"
+      >
         <div className="p-3">
           <div className=" flex items-start justify-between gap-2">
             <div className="flex-1 min-w-0">

@@ -16,7 +16,7 @@ export function useBoard(initialBoard?: Board | null) {
     }
   }, [initialBoard]);
 
-  async function moveJob(
+ async function moveJob(
     jobApplicationId: string,
     newColumnId: string,
     newOrder: number,
