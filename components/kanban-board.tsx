@@ -15,6 +15,7 @@ import {
   closestCorners,
   DndContext,
   PointerSensor,
+  useDroppable,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
@@ -61,6 +62,13 @@ function DroppableColumn({
   boardId: string;
   sortedColumns: Column[];
 }) {
+  const { setNodeRef, isOver } = useDroppable({
+    id: column._id,
+    data: {
+      type: "column",
+      columnId: column._id,
+    },
+  });
   const sortedJobs =
     column.jobApplications.sort((a, b) => a.order - b.order) || [];
 
@@ -84,7 +92,10 @@ function DroppableColumn({
         </div>
       </div>
       {/* Card Content */}
-      <div className="space-y-2 py-4 bg-gray-50/50 min-h-100 rounded-b-lg">
+      <div
+        ref={setNodeRef}
+        className={`space-y-2 py-4 bg-gray-50/50 min-h-100 rounded-b-lg ${isOver ? "ring-2 ring-blue-500" : ""}`}
+      >
         {sortedJobs.map((job, key) => (
           <SortableJobCard
             key={key}
