@@ -15,6 +15,7 @@ import {
   closestCorners,
   DndContext,
   DragEndEvent,
+  DragOverlay,
   DragStartEvent,
   PointerSensor,
   useDroppable,
@@ -287,7 +288,7 @@ function KanbanBoard({ board, userId }: KanbanBoardProps) {
     >
       <div className="space-y-4">
         <div className="flex gap-4 overflow-x-auto pb-4">
-          {columns.map((col, key) => {
+          {sortedColumns.map((col, key) => {
             const config = COLUMN_CONFIG[key] || {
               color: "bg-gray-500",
               icon: <Calendar className="h-4 w-4" />,
@@ -304,11 +305,15 @@ function KanbanBoard({ board, userId }: KanbanBoardProps) {
           })}
         </div>
       </div>
+      <DragOverlay>
+        {activeJob ? (
+          <div className="opacity-50">
+            <JobApplicationCard job={activeJob} columns={sortedColumns} />
+          </div>
+        ) : null}
+      </DragOverlay>
     </DndContext>
   );
 }
 
 export default KanbanBoard;
-function moveJob(activeId: string, targetColumnId: string, newOrder: number) {
-  throw new Error("Function not implemented.");
-}
