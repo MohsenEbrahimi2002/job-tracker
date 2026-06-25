@@ -50,7 +50,7 @@ function Navbar() {
               </div>
               {openDropDownMenu && (
                 <DropDownMenu className="h-36">
-                  <p className="text-black font-bold text-xl">
+                  <p className="text-black font-semibold text-lg truncate">
                     {data.user.name}
                   </p>
                   <p className="text-slate-500/80 -mt-8">{data.user.email}</p>
